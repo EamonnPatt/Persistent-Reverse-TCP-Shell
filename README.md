@@ -6,6 +6,10 @@ A USB-based deployment system that establishes a persistent reverse shell on Win
 
 This tool installs a payload (`updater.exe`) to a hidden directory (`C:\Windows~\`) and adds it to the Windows startup registry. Once installed, the payload automatically connects to a listener on each system boot, providing persistent remote access.
 
+## Techniques
+
+This reverse shell implements multiple evasion and stealth mechanisms to avoid detection on Windows systems. The payload hides its console window using Win32 API calls (`ShowWindow` and `SetWindowLong`) and modifies window styles to prevent it from appearing in the taskbar. It uses a global mutex (`WindowsUpdateService`) to prevent multiple instances from running simultaneously, which reduces suspicious process behavior. The code incorporates random delays (0-60 seconds on startup, 30-90 seconds between reconnection attempts) to avoid predictable network patterns that could trigger behavioral analysis tools. It also lowers its process priority to `BelowNormal` to minimize CPU usage spikes that might alert monitoring software. The shell runs on a background thread and automatically reconnects to the listener if the connection drops, providing persistent access across network interruptions. Configuration details (IP and port) are loaded from an external `.env` file rather than being hardcoded, making static analysis more difficult and allowing the payload to be reconfigured without recompilation.
+
 ## Components
 
 - **install.vbs** - VBScript that deploys the payload and configures persistence (`install.vbs`)
