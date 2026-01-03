@@ -8,7 +8,7 @@ This tool installs a payload (`updater.exe`) to a hidden directory (`C:\Windows~
 
 ## Components
 
-- **installer.vbs** - VBScript that deploys the payload and configures persistence
+- **install.vbs** - VBScript that deploys the payload and configures persistence (`install.vbs`)
 - **updater.exe** - Compiled reverse shell payload (from `shell.cs`)
 - **shell.cs** - C# source code for the reverse shell
 
@@ -36,7 +36,7 @@ mcs -target:winexe shell.cs -out:updater.exe
 
 Transfer both files to your USB drive:
 ```bash
-cp installer.vbs /media/ep/6197-1B82/
+cp install.vbs /media/ep/6197-1B82/
 cp updater.exe /media/ep/6197-1B82/
 ```
 
@@ -44,13 +44,13 @@ cp updater.exe /media/ep/6197-1B82/
 
 ### 3. Deploy on Target
 
-Insert the USB into the target machine and run `installer.vbs`. This will:
+Insert the USB into the target machine and run `install.vbs`. This will:
 - Create the hidden directory `C:\Windows~\`
 - Copy `updater.exe` to the hidden directory
 - Add the payload to the Windows startup registry
 - Execute the payload immediately
 
-!! All you need to do on the target machine is run the installer.vbs file !!
+!! All you need to do on the target machine is run the install.vbs file !!
 ## Usage
 
 ### Start the Listener
